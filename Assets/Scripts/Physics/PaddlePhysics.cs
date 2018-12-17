@@ -3,40 +3,55 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PaddlePhysics : MonoBehaviour {
+
     [Header("Adjust Paddle Speed here")]
     public float paddleSpeed = 30f;
-    public float hitTIme = 1f;
-    public float rightBoundX = 13.7f;
-    public float leftBoundX = -4.3f;
-    bool isHitted;
+    public float hitTime = 1f;
+
+    [Header("Paddle Boundary")]
+    public Transform leftBound, rightBound;
+    private float leftBoundX, rightBoundX;
+
+    bool isHit;
+
+    private void Start()
+    {
+        rightBoundX = rightBound.position.x;
+        leftBoundX = leftBound.position.x;
+    }
 
     void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Ball" && !isHitted)
+        if (collision.gameObject.tag == "Ball" && !isHit)
         {
             float angle = GetOffset(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y);
             collision.gameObject.GetComponent<BallPhysics>().Bounce(angle);
-            isHitted = true;
+            isHit = true;
             //StartCoroutine(ResetHit(hitTIme));
         }
     }
     void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Ball" && isHitted)
+        if (collision.gameObject.tag == "Ball" && isHit)
         {
-            isHitted = false;
+            isHit = false;
         }
     }
     void Update()
     {
-        transform.Translate(Input.acceleration.y * paddleSpeed, 0, 0);
+        //transform.Translate(Input.acceleration.y * paddleSpeed, 0, 0);
         PaddleInput();
+    }
+
+    private void LateUpdate()
+    {
+        //isHit = false;
     }
 
     IEnumerator ResetHit(float hitTime)
     {
         yield return new WaitForSeconds(hitTime);
-        isHitted = false;
+        isHit = false;
     }
 
     void PaddleInput()

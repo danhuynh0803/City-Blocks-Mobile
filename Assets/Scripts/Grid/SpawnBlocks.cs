@@ -6,8 +6,8 @@ public class SpawnBlocks : MonoBehaviour {
   
     [Header("Left bottom block spawn postition")]
     public Transform startBlockPos;
-    private float offsetX = -2.45f;
-    private float offsetY = 2.7f;
+    private float offsetX = -2.45f; // number here was for testing purposes
+    private float offsetY = 2.7f;   // number here was for testing purposes
 
     [Header("Spawn block settings")]
     public float gapX;
@@ -33,7 +33,8 @@ public class SpawnBlocks : MonoBehaviour {
         currSpawnNumber = 0.57f;
         blocksHit = 0;
         blocksCount = 0;
-        offsetX = startBlockPos.position.x;
+        float midpoint = (startBlockPos.position.x + (rows * gapX)) / 2.0f;
+        offsetX = startBlockPos.position.x - midpoint;
         offsetY = startBlockPos.position.y;
         timer = 0;
         Spawn();
