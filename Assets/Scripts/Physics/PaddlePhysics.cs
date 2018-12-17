@@ -29,6 +29,7 @@ public class PaddlePhysics : MonoBehaviour {
     }
     void Update()
     {
+        transform.Translate(Input.acceleration.y * paddleSpeed, 0, 0);
         PaddleInput();
     }
 
@@ -39,7 +40,7 @@ public class PaddlePhysics : MonoBehaviour {
     }
 
     void PaddleInput()
-    {
+    {       
         if((Input.GetKey(KeyCode.RightArrow) || (Input.GetKey(KeyCode.RightBracket))) && (transform.position.x + GetComponent<SpriteRenderer>().bounds.size.x/2) <= rightBoundX)
         {
             transform.position = new Vector2(transform.position.x + paddleSpeed * Time.deltaTime, transform.position.y);
@@ -47,8 +48,9 @@ public class PaddlePhysics : MonoBehaviour {
         else if ((Input.GetKey(KeyCode.LeftArrow) || (Input.GetKey(KeyCode.LeftBracket))) && (transform.position.x - GetComponent<SpriteRenderer>().bounds.size.x/2) >= leftBoundX)
         {
             transform.position = new Vector2(transform.position.x - paddleSpeed * Time.deltaTime, transform.position.y);
-        }
+        }      
     }
+
     float GetOffset(float ballX, float ballY)
     {
         float radian = 0;

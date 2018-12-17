@@ -6,7 +6,7 @@ public class BGM : MonoBehaviour {
     // TODO combine this with the SoundController
 	static bool isAudioOn = false;
 	new AudioSource audio;
-
+    public bool isMenu;
     private GameObject guiSoundObj;
     private GameObject soundObj;
 
@@ -25,7 +25,8 @@ public class BGM : MonoBehaviour {
     void Update()
     {
         guiSoundObj = GameObject.FindGameObjectWithTag("GUISoundController");
-        soundObj = GameObject.FindGameObjectWithTag("SoundController");
+        if(!isMenu)
+            soundObj = GameObject.FindGameObjectWithTag("SoundController");
         if (soundObj != null)
         {
             //Debug.Log("Found sound obj");
