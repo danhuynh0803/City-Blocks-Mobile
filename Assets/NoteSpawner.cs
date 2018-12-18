@@ -4,33 +4,50 @@ using UnityEngine;
 
 public class NoteSpawner : MonoBehaviour
 {
-    public Transform spawn1, spawn2, spawn3, spawn4;
+    [Header("Note Positioning")]
+    public Transform[] spawnPos = new Transform[4];
+    public Transform[] finalPos = new Transform[4];
 
     [Header("Note Settings")]
     public GameObject noteObject;
     public int beatsPerMinute;
-
-    private Vector3 s1Pos, s2Pos, s3Pos, s4Pos;
-    private Vector3 f1Pos, f2Pos, f3Pos, f4Pos;
+    public float noteSpeed = 5.0f; // for testing, later scale with beatsPerMinute
+    
+    private float spawnTime;
+    private float timer;
 
     // Start is called before the first frame update
     void Start()
     {
-        s1Pos = spawn1.position;
-        s2Pos = spawn2.position;
-        s3Pos = spawn3.position;
-        s4Pos = spawn4.position;
+        timer = 0;
+        spawnTime = 60.0f / (float)beatsPerMinute;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        timer += Time.deltaTime;
+        if (timer >= spawnTime)
+        {
+            //Debug.Log("Spawn a note");
+            RandomNoteSpawn();
+            timer = 0;
+        }
     }
 
-    // Random Note spawner
-    private void RandomSpawn()
+    // Spawns note randomly at one of the four spawn positions
+    private void RandomNoteSpawn()
     {
+        int index = (int)(Random.Range(0, 3.99f));
+        GameObject newNote = 
+            Instantiate(noteObject, 
+                        spawnPos[index].position, 
+                        Quaternion.identity) 
+                as GameObject;
 
+        newNote.GetComponent<Note>()
+            .SetSpeedAndInputTimer(noteSpeed, 
+                                   spawnPos[index].position, 
+                                   finalPos[index].position);
     }
 }
