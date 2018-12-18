@@ -1578,6 +1578,11 @@ PrefabInstance:
       propertyPath: rightBound
       value: 
       objectReference: {fileID: 1578177615}
+    - target: {fileID: 114040567616646910, guid: ceb3704a86ce27b48aeed9657ccfd896,
+        type: 3}
+      propertyPath: paddleSpeed
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 61947261071949446, guid: ceb3704a86ce27b48aeed9657ccfd896,
         type: 3}
       propertyPath: m_SpriteTilingProperty.border.x
