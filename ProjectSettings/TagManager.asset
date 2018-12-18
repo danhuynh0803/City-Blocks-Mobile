@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ball
+  - KillBlockLayer
+  - SoundController
+  - Note
   layers:
   - Default
   - TransparentFX

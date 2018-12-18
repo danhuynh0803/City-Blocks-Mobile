@@ -19,7 +19,7 @@ public class PaddlePhysics : MonoBehaviour {
         rightBoundX = rightBound.position.x;
         leftBoundX = leftBound.position.x;
     }
-
+    
     void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Ball" && !isHit)
@@ -30,6 +30,7 @@ public class PaddlePhysics : MonoBehaviour {
             //StartCoroutine(ResetHit(hitTIme));
         }
     }
+
     void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Ball" && isHit)
@@ -37,6 +38,7 @@ public class PaddlePhysics : MonoBehaviour {
             isHit = false;
         }
     }
+
     void Update()
     {
         //transform.Translate(Input.acceleration.y * paddleSpeed, 0, 0);
