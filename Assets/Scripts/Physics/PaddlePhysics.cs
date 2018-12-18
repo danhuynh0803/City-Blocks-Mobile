@@ -41,8 +41,13 @@ public class PaddlePhysics : MonoBehaviour {
 
     void Update()
     {
-        //transform.Translate(Input.acceleration.y * paddleSpeed, 0, 0);
-        PaddleInput();
+        PaddleMobileInput();
+        //PaddleInput(); // Keyboard inputs
+    }
+
+    void PaddleMobileInput()
+    {
+        transform.Translate(Input.acceleration.y * paddleSpeed, 0, 0);
     }
 
     private void LateUpdate()

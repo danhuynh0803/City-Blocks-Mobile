@@ -5,8 +5,8 @@ using UnityEngine;
 public class Note : MonoBehaviour
 {
     public float speed;
-    private float inputTimer;
-    private float timer; 
+    public float inputTimer;
+    public float timer; 
 
     public void SetSpeedAndInputTimer(float speed, 
                                       Vector3 startPos, 
