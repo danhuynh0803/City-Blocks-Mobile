@@ -12,12 +12,22 @@ public class PaddlePhysics : MonoBehaviour {
     public Transform leftBound, rightBound;
     private float leftBoundX, rightBoundX;
 
+    private Rigidbody2D rb2d;
+    private float dirX;
+    // TODO check performance of collider vs spriterenderer, which is more future-proof for us
+    //private Vector3 minCollider, maxCollider;
+    //private float midPointX; // Used to offset the collider bounds so we dont exit the break-out boundaries;
     bool isHit;
 
     private void Start()
     {
+        rb2d = GetComponent<Rigidbody2D>();
         rightBoundX = rightBound.position.x;
         leftBoundX = leftBound.position.x;
+        
+        //minCollider = GetComponent<Collider2D>().bounds.min;
+        //maxCollider = GetComponent<Collider2D>().bounds.max;        
+        //midPointX = Vector3.Distance(maxCollider, minCollider) / 2.0f;
     }
     
     void OnTriggerStay2D(Collider2D collision)
@@ -39,16 +49,27 @@ public class PaddlePhysics : MonoBehaviour {
         }
     }
 
-    void Update()
+    private void Update()
     {
-        PaddleMobileInput();
-        //PaddleInput(); // Keyboard inputs
+        dirX = Input.acceleration.x * paddleSpeed;
+        transform.position = 
+            new Vector2(Mathf.Clamp(transform.position.x, 
+                                    (leftBound.position.x + GetComponent<SpriteRenderer>().bounds.size.x * 0.5f), 
+                                    (rightBound.position.x - GetComponent<SpriteRenderer>().bounds.size.x * 0.5f)
+                                    ),
+                        transform.position.y);
+    }
+
+    void FixedUpdate()
+    {
+        //PaddleMobileInput();
+        //PaddleInput(); // Keyboard inputs        
+        rb2d.velocity = new Vector2(Input.acceleration.x * paddleSpeed, 0.0f);
     }
 
     void PaddleMobileInput()
     {
-        transform.Translate(Input.acceleration.x * paddleSpeed * Time.deltaTime, 0, 0);
-        
+        //transform.Translate(Input.acceleration.x * paddleSpeed * Time.deltaTime, 0, 0);        
     }
 
     private void LateUpdate()

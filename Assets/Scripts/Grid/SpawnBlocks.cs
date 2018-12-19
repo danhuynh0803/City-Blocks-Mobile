@@ -10,7 +10,7 @@ public class SpawnBlocks : MonoBehaviour {
     private float offsetY = 2.7f;   // number here was for testing purposes
 
     [Header("Spawn block settings")]
-    public float gapX;
+    public float gapX; // This number already takes into account the size of the block, which is 1.9f currently
     public float gapY;
     public GameObject blockPrefab;
     public GameObject metalBlockPrefab;
@@ -33,8 +33,10 @@ public class SpawnBlocks : MonoBehaviour {
         currSpawnNumber = 0.57f;
         blocksHit = 0;
         blocksCount = 0;
-        float midpoint = (startBlockPos.position.x + (rows * gapX)) / 2.0f;
-        offsetX = startBlockPos.position.x - midpoint;
+        //float blockSizeX = blockPrefab.GetComponent<Collider2D>().bounds.size.x;
+        float midpoint = (rows * gapX * 0.5f);
+        offsetX = startBlockPos.position.x - midpoint + (gapX * 0.5f);
+        Debug.Log(offsetX);
         offsetY = startBlockPos.position.y;
         timer = 0;
         Spawn();

@@ -1870,7 +1870,7 @@ MonoBehaviour:
     type: 3}
   metalBlockPrefab: {fileID: 1863354468862628, guid: 7e595e5a445b95a4bb071ec9f88b5812,
     type: 3}
-  rows: 6
+  rows: 7
   cols: 6
   ball: {fileID: 1331320239}
   spawnDelay: 15
