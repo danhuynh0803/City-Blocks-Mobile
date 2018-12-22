@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 5559127234040732999}
   - component: {fileID: 6624410241842983155}
   - component: {fileID: 7501443227034409070}
-  - component: {fileID: 7377133597634599263}
   - component: {fileID: 71042753381247371}
+  - component: {fileID: 1740982165306024474}
   m_Layer: 0
-  m_Name: Note
+  m_Name: PowerupNote
   m_TagString: Note
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0, g: 0.63248205, b: 1, a: 1}
+  m_Color: {r: 0.513772, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -98,21 +98,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.1
---- !u!114 &7377133597634599263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6102420593013299659}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c6967da379ad194ca37ba3a3621a7f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0
-  inputTimer: 0
-  timer: 0
 --- !u!50 &71042753381247371
 Rigidbody2D:
   serializedVersion: 4
@@ -134,3 +119,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1740982165306024474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6102420593013299659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1da8a5e3edfbb4342b5ed10a54c595b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ball: {fileID: 0}
+  powerUpJumpOutPrefab: {fileID: 0}
+  decreaseBallSpeedFactor: 0
+  decreaseBallSpeedDuration: 0
+  DecreaseBallSpeedStack: 0
+  lifeText: {fileID: 0}
+  lifePrefab: {fileID: 0}
+  playerPaddle: {fileID: 0}
+  lengthenScale: 0
+  lengthenDuration: 0
+  originalScale: {x: 0, y: 0, z: 0}
+  bumper: {fileID: 0}
+  bumperDuration: 0

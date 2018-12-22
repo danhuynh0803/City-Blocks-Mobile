@@ -18,9 +18,14 @@ public class Note : MonoBehaviour
     }    
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         transform.Translate(Vector3.down * speed * Time.deltaTime);
         timer += Time.deltaTime;
+    }
+
+    public virtual void ProcessInput()
+    {
+        // Basic notes just add to the score
     }
 }

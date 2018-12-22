@@ -1,12 +1,22 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class Powerup : MonoBehaviour {
+public enum Powerup
+{
+    AddLife,
+    LengthenPaddle,
+    DecreaseBallSpeed,
+    Bumpers
+};
 
+public class PowerupController : MonoBehaviour
+{
     public GameObject ball;
     public GameObject powerUpJumpOutPrefab;
-
     private LevelController levelController;
+
     #region DecreaseBallSpeed
     [Header("DecreaseBallSpeed")]
     public float decreaseBallSpeedFactor;
@@ -46,55 +56,57 @@ public class Powerup : MonoBehaviour {
     }
     #endregion
 
-    public void ActivatePowerup(int wordLineNum, Word word)
+    public void ActivatePowerup(PowerupNote pnote)
     {
         GameObject powerUpText = Instantiate(powerUpJumpOutPrefab);
-        powerUpText.transform.parent = GameObject.Find("Canvas").transform;
+        // TODO, replace this magicstring
+        powerUpText.transform.parent = GameObject.Find("HUDPanel").transform;
         powerUpText.transform.position = new Vector2(850f, 550f);
         Text white = powerUpText.GetComponent<PowerUpJumpOutTextAnimation>().white;
-        Text black = powerUpText.GetComponent<PowerUpJumpOutTextAnimation>().black;
+        Text black = powerUpText.GetComponent<PowerUpJumpOutTextAnimation>().black;       
         //Debug.Log("In Powerup functions");
-        if (wordLineNum < 6)
+        switch (pnote.powerup)
         {
-            //Debug.Log("AddLife");
-            white.text = "Life++!";
-            black.text = "Life++!";
-            white.color = new Color(1.0f, 0f, 0f);
-            SoundController.Play((int)SFX.Pickup, 0.1f);
-            AddLife(word);
-        }
-        else if (wordLineNum < 11)
-        {
-            //Debug.Log("Ballspeed");
-            white.text = "Speed--!";
-            black.text = "Speed--!";
-            white.color = new Color(1.0f, 1.0f, 0f);
-            SoundController.Play((int)SFX.Brakes, 0.1f);
-            DecreaseBallSpeedEffect(20f);
-        }
-        else if (wordLineNum < 17)
-        {
-            //Debug.Log("Paddle");
-            white.text = "Size++!";
-            black.text = "Size++!";
-            white.color = new Color(0f, 1.0f, 0f);
-            LengthenPaddle(20f);
-            SoundController.Play((int)SFX.Speedup, 0.1f);
-        }
-        else if (wordLineNum < 22)
-        {
-            //Debug.Log("Bumpers");
-            white.text = "Bumper!";
-            black.text = "Bumper!";
-            white.color = new Color(0, 1f, 1f);
-            SoundController.Play((int)SFX.Speedup, 0.1f);
-            ToggleBumper(true, 10);
-        }
-        else
-        {
-            DestroyObject(powerUpText);
-            //Debug.Log("No powerup associated with this word");
-        }
+            case Powerup.AddLife:
+                //Debug.Log("AddLife");
+                white.text = "Life++!";
+                black.text = "Life++!";
+                white.color = new Color(1.0f, 0f, 0f);
+                SoundController.Play((int)SFX.Pickup, 0.1f);
+                AddLife(pnote);
+                break;
+
+            case Powerup.DecreaseBallSpeed:
+                //Debug.Log("Ballspeed");
+                white.text = "Speed--!";
+                black.text = "Speed--!";
+                white.color = new Color(1.0f, 1.0f, 0f);
+                SoundController.Play((int)SFX.Brakes, 0.1f);
+                DecreaseBallSpeedEffect(20f);
+                break;
+
+            case Powerup.LengthenPaddle:
+                //Debug.Log("Paddle");
+                white.text = "Size++!";
+                black.text = "Size++!";
+                white.color = new Color(0f, 1.0f, 0f);
+                LengthenPaddle(20f);
+                SoundController.Play((int)SFX.Speedup, 0.1f);
+                break;
+
+            case Powerup.Bumpers:
+                //Debug.Log("Bumpers");
+                white.text = "Bumper!";
+                black.text = "Bumper!";
+                white.color = new Color(0, 1f, 1f);
+                SoundController.Play((int)SFX.Speedup, 0.1f);
+                ToggleBumper(true, 10);
+                break;
+
+            default:
+                break;
+
+        };
     }
 
     #region AddLife
@@ -105,9 +117,9 @@ public class Powerup : MonoBehaviour {
     public GameObject lifeText;
     public GameObject lifePrefab;
     // Add life but do not add if at max lives
-    public void AddLife(Word word)
+    public void AddLife(Note note)
     {
-        wordPosition = Camera.main.ScreenToWorldPoint(word.display.gameObject.transform.position);
+        wordPosition = Camera.main.ScreenToWorldPoint(note.gameObject.transform.position);
         wordObject = Instantiate(lifePrefab);
         moveWord = true;
     }
@@ -128,7 +140,7 @@ public class Powerup : MonoBehaviour {
         isLengthen = true;
         Transform paddleTransform = playerPaddle.transform;
         paddleTransform.localScale = new Vector3(paddleTransform.localScale.x + lengthenScale, paddleTransform.localScale.y, paddleTransform.localScale.z);
-        if(playerPaddle.GetComponent<BoxCollider2D>().enabled)
+        if (playerPaddle.GetComponent<BoxCollider2D>().enabled)
             Destroy(playerPaddle.GetComponent<BoxCollider2D>());
         playerPaddle.AddComponent<BoxCollider2D>();
         playerPaddle.GetComponent<BoxCollider2D>().isTrigger = true;
@@ -153,21 +165,21 @@ public class Powerup : MonoBehaviour {
     [SerializeField]
     private float bumperDuration;
     private bool isBumperOn;
-    public void ToggleBumper(bool toggle,float time)
+    public void ToggleBumper(bool toggle, float time)
     {
         //isBumperOn = toggle;
         bumper.SetActive(toggle);
         //if (toggle)
-            //bumperDuration = time;
+        //bumperDuration = time;
         //else
-            //bumperDuration = time;
+        //bumperDuration = time;
     }
 
     #endregion
     #region Multiplier
     public void AddMultiplier()
     {
-        
+
     }
     #endregion
     void Start()
@@ -181,12 +193,12 @@ public class Powerup : MonoBehaviour {
     void Update()
     {
 
-        if (playerPaddle.GetComponent<BoxCollider2D>()!=null)
+        if (playerPaddle.GetComponent<BoxCollider2D>() != null)
         {
             playerPaddle.GetComponent<BoxCollider2D>().isTrigger = true;
         }
-            //for health animation
-            if (moveWord)
+        //for health animation
+        if (moveWord)
         {
             if (wordObject.GetComponent<LifeAnimation>().time < 1)
             {
@@ -211,15 +223,15 @@ public class Powerup : MonoBehaviour {
                 ToggleBumper(false, 0);
         **/
         //size buff
-        if(lengthenDuration > 0)
+        if (lengthenDuration > 0)
             lengthenDuration -= Time.deltaTime;
         else
         {
-            if(isLengthen)
+            if (isLengthen)
                 ResetScale();
         }
         //speed buff
-        if(decreaseBallSpeedDuration > 0)
+        if (decreaseBallSpeedDuration > 0)
         {
             decreaseBallSpeedDuration -= Time.deltaTime;
         }
@@ -230,3 +242,4 @@ public class Powerup : MonoBehaviour {
         }
     }
 }
+

@@ -17,7 +17,7 @@ public class WordManager : MonoBehaviour {
 
     private string finalWord = "Remember?";
 
-    private Powerup powerupController;
+    //private Powerup powerupController;
     private LevelController levelController;
 
     void Start()
@@ -26,7 +26,7 @@ public class WordManager : MonoBehaviour {
         levelController = FindObjectOfType<LevelController>();
         wordSpawner = FindObjectOfType<WordSpawner>();
         wordGenerator = FindObjectOfType<WordGenerator>();
-        powerupController = FindObjectOfType<Powerup>();
+        //powerupController = FindObjectOfType<Powerup>();
 
         // For testing if words are parsed properly
         /*
@@ -151,7 +151,7 @@ public class WordManager : MonoBehaviour {
     {
         activeWord.Remove(active);
         // Active the powerup for that word
-        powerupController.ActivatePowerup(active.lineNumFunction, active); // pass the index
+        //powerupController.ActivatePowerup(active.lineNumFunction, active); // pass the index
         ScoreController.incrementScore(active.points);  // Get points for typing the word correctly
         active.display.RemoveWord();
         wordList.Remove(active);

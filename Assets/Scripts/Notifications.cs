@@ -8,12 +8,15 @@ public class Notifications : MonoBehaviour
     Animator anim;
     private float timer;
     public Text textText;
+    public GameObject textMsg;
+    private bool hasStarted;
 
     // Start is called before the first frame update
     void Start()
     {
         anim = gameObject.GetComponent<Animator>();
-        timer = 5.0f;
+        timer = 6.0f;
+        textMsg.SetActive(false);
     }
 
     // Update is called once per frame
@@ -23,13 +26,19 @@ public class Notifications : MonoBehaviour
         if(timer < 0)
         {
             float rate = Random.Range(0.0f, 100.0f);
-            if (rate > 99.0f)
+            if (rate > 79.0f)
             {
                 anim.Play("Notifications");
-                float rate2 = Random.Range(0.0f, 7.0f);
-                if (rate > 6.0f)
+                textMsg.SetActive(true);
+                hasStarted = true;
+                float rate2 = Random.Range(0.0f, 8.0f);
+                if (rate > 7.0f)
                 {
                     textText.text = "3/1/12/12/9/15/16/5 1/18/9/19/5"; //Calliope arise
+                }
+                else if (rate > 6.0f)
+                {
+                    textText.text = "Working late again?";
                 }
                 else if (rate > 5.0f)
                 {
@@ -52,7 +61,12 @@ public class Notifications : MonoBehaviour
                     textText.text = "Thank you for playing.";
                 }
             }
+            timer = 25.0f;
         }
-        timer = 10.0f;
+        if(timer < 18 && hasStarted)
+        {
+            anim.Play("Off");
+            textMsg.SetActive(false);
+        }
     }
 }

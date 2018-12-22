@@ -7,12 +7,14 @@ public class InputNote : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag.Equals("Note"))
+        Note note = collision.gameObject.GetComponent<Note>();
+        //if (collision.gameObject.tag.Equals("Note"))
+        if (note != null)
         {
             if (Input.GetMouseButtonDown(0))
             {
-                ProcessNoteScore(collision.gameObject.GetComponent<Note>());
-
+                note.ProcessInput();
+                //ProcessNoteScore(collision.gameObject.GetComponent<Note>());
                 Destroy(collision.gameObject);
             }
         }

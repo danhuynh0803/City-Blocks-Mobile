@@ -36,7 +36,7 @@ public class SpawnBlocks : MonoBehaviour {
         //float blockSizeX = blockPrefab.GetComponent<Collider2D>().bounds.size.x;
         float midpoint = (rows * gapX * 0.5f);
         offsetX = startBlockPos.position.x - midpoint + (gapX * 0.5f);
-        Debug.Log(offsetX);
+        //Debug.Log(offsetX);
         offsetY = startBlockPos.position.y;
         timer = 0;
         Spawn();

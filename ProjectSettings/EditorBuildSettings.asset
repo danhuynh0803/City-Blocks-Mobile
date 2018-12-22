@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/_Scenes/MainMenu.unity
     guid: 6412cd48c5ed92d4eb034eda65965902
   - enabled: 1
-    path: Assets/_Scenes/Stage1.unity
+    path: Assets/_Scenes/Stage1_4Tracks.unity
     guid: 1f11ac0b72a1a4f43923fa5a7c04d81b
   - enabled: 1
     path: Assets/_Scenes/ChallengeMode.unity
