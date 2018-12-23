@@ -54,7 +54,7 @@ public class Notifications : MonoBehaviour
                 }
                 else if (rate > 2.0f)
                 {
-                    textText.text = "Journey is more than destination."; //will probably get clipped intentionally
+                    textText.text = "The journey is more than the destination."; //will probably get clipped intentionally
                 }
                 else
                 {

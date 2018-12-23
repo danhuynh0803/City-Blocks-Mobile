@@ -41,7 +41,8 @@ public class InputNote : MonoBehaviour
     private void ProcessNoteScore(Note note)
     {
         float diff = Mathf.Abs(note.inputTimer - note.timer);
-  
+        //float diff = Vector3.Distance(note.transform.position, transform.position);
+
         if (diff <= 0.05f)
         {
             DisplayComboText("Perfect!", Color.green);

@@ -6,22 +6,27 @@ public class Note : MonoBehaviour
 {
     public float speed;
     public float inputTimer;
-    public float timer; 
+    public float timer;
+    private bool isMoving;
 
     public void SetSpeedAndInputTimer(float speed, 
                                       Vector3 startPos, 
                                       Vector3 endPos)
     {
         this.speed = speed;
-        inputTimer = Vector3.Distance(startPos, endPos) / speed;
+        inputTimer = (startPos.y - endPos.y) / speed;
         timer = 0;
+        isMoving = true;
     }    
 
     // Update is called once per frame
     protected void Update()
     {
-        transform.Translate(Vector3.down * speed * Time.deltaTime);
-        timer += Time.deltaTime;
+        if (isMoving)
+        {
+            timer += Time.deltaTime;
+            transform.Translate(Vector3.down * speed * Time.deltaTime);
+        }
     }
 
     public virtual void ProcessInput()

@@ -131,16 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1da8a5e3edfbb4342b5ed10a54c595b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ball: {fileID: 0}
-  powerUpJumpOutPrefab: {fileID: 0}
-  decreaseBallSpeedFactor: 0
-  decreaseBallSpeedDuration: 0
-  DecreaseBallSpeedStack: 0
-  lifeText: {fileID: 0}
-  lifePrefab: {fileID: 0}
-  playerPaddle: {fileID: 0}
-  lengthenScale: 0
-  lengthenDuration: 0
-  originalScale: {x: 0, y: 0, z: 0}
-  bumper: {fileID: 0}
-  bumperDuration: 0
+  speed: 0
+  inputTimer: 0
+  timer: 0
+  powerup: 0
