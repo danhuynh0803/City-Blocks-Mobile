@@ -61,7 +61,7 @@ public class PowerupController : MonoBehaviour
         GameObject powerUpText = Instantiate(powerUpJumpOutPrefab);
         // TODO, replace this magicstring
         powerUpText.transform.parent = GameObject.Find("HUDPanel").transform;
-        powerUpText.transform.position = new Vector2(850f, 550f);
+        powerUpText.transform.localPosition = new Vector2(0f, 0f);
         Text white = powerUpText.GetComponent<PowerUpJumpOutTextAnimation>().white;
         Text black = powerUpText.GetComponent<PowerUpJumpOutTextAnimation>().black;       
         //Debug.Log("In Powerup functions");

@@ -8,16 +8,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/MainMenu.unity
     guid: 6412cd48c5ed92d4eb034eda65965902
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/Stage1_4Tracks.unity
     guid: 1f11ac0b72a1a4f43923fa5a7c04d81b
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/ChallengeMode.unity
     guid: e29c7f1809b97c642a69513265af724a
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/Stage1QuickMode.unity
     guid: e0b9fad389a5a8b449f0689af6778bcf
   - enabled: 1
     path: Assets/_Scenes/Win.unity
     guid: bda8f0c25af968e47873d45e4041fd4f
+  - enabled: 1
+    path: Assets/_Scenes/Stage1.unity
+    guid: 5d73d83970a9c104781f94c5fc1f283b
   m_configObjects: {}
