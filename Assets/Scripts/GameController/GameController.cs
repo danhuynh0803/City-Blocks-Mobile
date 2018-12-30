@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GooglePlayGames;
+using UnityEngine.SocialPlatforms;
 
 // This script just holds level settings 
 // Used by the level manager 
@@ -25,5 +27,10 @@ public class GameController : MonoBehaviour {
     {
         //isGameControllerOn = true;
         DontDestroyOnLoad(this);
+    }
+
+    public void ShowLeaderboard()
+    {
+        ServicesManager.instance.ShowLeaderboardsUI();
     }
 }

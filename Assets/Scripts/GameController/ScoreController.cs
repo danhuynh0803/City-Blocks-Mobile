@@ -4,6 +4,8 @@ using System.Collections;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System;
+using GooglePlayGames;
+using UnityEngine.SocialPlatforms;
 
 public class ScoreController : MonoBehaviour
 {
@@ -33,16 +35,14 @@ public class ScoreController : MonoBehaviour
     {
         score = 0;
         scoreMultiplier = 1;
-        //highscore = 100;
         
         level = GameController.level;    
         if (level == (int)GameController.Level.story)
         {
-            highscore = 5151992;
+            highscore = 500;
         }       
-        highTime = 10f;        
-        //Load();
-        // For testing win condition
+        highTime = 10f;
+        LoadFromLeaderBoard();
     }
     void Start()
     {
@@ -138,7 +138,7 @@ public class ScoreController : MonoBehaviour
 
     public static void UpdateHighScore()
     {
-        //Save(score,time);
+        SaveToLeaderBoard(score);
         highscore = score;
         if (newHighScoreT.gameObject != null)
             newHighScoreT.gameObject.SetActive(true);
@@ -152,8 +152,10 @@ public class ScoreController : MonoBehaviour
             newHighTimeT.gameObject.SetActive(true);
     }
 
+    //local user save
     public static void Save(int highScore, float highTime)
     {
+
         BinaryFormatter bf = new BinaryFormatter();
         FileStream saveFile = File.Create(Application.persistentDataPath + "/LD41PlayerInfo.dat");
         PlayerData data = new PlayerData(highScore, highTime);
@@ -161,6 +163,22 @@ public class ScoreController : MonoBehaviour
         saveFile.Close();
     }
 
+    public static void SaveToLeaderBoard(int highScore)
+    {
+        //post to leaderboard
+        ServicesManager.instance.AddScoreToLeaderboard(GPGSIds.leaderboard_leaderboard, highScore);
+    }
+
+    public static void LoadFromLeaderBoard()
+    {
+        int leaderboardHighScore = ServicesManager.instance.LoadScoreFromLeaderboard();
+        if (leaderboardHighScore > highscore)
+        {
+            highscore = leaderboardHighScore;
+        }
+    }
+
+    //load high score from local user's file, not leaderboard
     public static void Load()
     {
         BinaryFormatter bf = new BinaryFormatter();
@@ -173,13 +191,16 @@ public class ScoreController : MonoBehaviour
             {
                 highscore = data.highScore;
             }
+            /*
             if(data.highTime > highTime)
             {
                 highTime = data.highTime;
             }
+            */
         }
         catch(FileNotFoundException e)
         {
+            //create a user save file if there is none
             Debug.Log("not found");
             Save(0,0f);
         }

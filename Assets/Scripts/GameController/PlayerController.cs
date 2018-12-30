@@ -32,11 +32,13 @@ public class PlayerController : MonoBehaviour {
     // This gets the next word being typed in
     void WordInput()
     {
+        /*
         // This handles the user input for typing test portion
         foreach (char letter in Input.inputString)
         {
             //Debug.Log(letter);
             wordManager.TypeLetter(letter);
         }
+        */
     }
 }

@@ -32,27 +32,27 @@ public class Notifications : MonoBehaviour
                 textMsg.SetActive(true);
                 hasStarted = true;
                 float rate2 = Random.Range(0.0f, 8.0f);
-                if (rate > 7.0f)
+                if (rate2 > 7.0f)
                 {
                     textText.text = "3/1/12/12/9/15/16/5 1/18/9/19/5"; //Calliope arise
                 }
-                else if (rate > 6.0f)
+                else if (rate2 > 6.0f)
                 {
                     textText.text = "Working late again?";
                 }
-                else if (rate > 5.0f)
+                else if (rate2 > 5.0f)
                 {
                     textText.text = "When are you coming home?";
                 }
-                 else if (rate > 4.0f)
+                 else if (rate2 > 4.0f)
                 {
                     textText.text = "Yes, there is a reason.";
                 }
-                else if (rate > 3.0f)
+                else if (rate2 > 3.0f)
                 {
                     textText.text = "No, we won't tell you.";
                 }
-                else if (rate > 2.0f)
+                else if (rate2 > 2.0f)
                 {
                     textText.text = "The journey is more than the destination."; //will probably get clipped intentionally
                 }
