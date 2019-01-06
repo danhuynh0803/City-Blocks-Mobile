@@ -5,8 +5,16 @@ using UnityEngine.UI;
 
 public class InputNote : MonoBehaviour
 {
+    [Header("Note combo settings")]
     public GameObject comboTextPrefab;
-    public Transform comboTransform;
+    public Transform comboTransform;  
+
+    private LevelController levelController;    // For accessing block speed, which will be tied to note performance
+
+    private void Start()
+    {
+        levelController = FindObjectOfType<LevelController>();
+    }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -40,6 +48,9 @@ public class InputNote : MonoBehaviour
     // Score is higher when the note is pressed with near its inputTimer
     private void ProcessNoteScore(Note note)
     {
+        // Increase the block speed since we tapped on the note
+        levelController.IncrementBlockSpeed();
+
         float diff = Mathf.Abs(note.inputTimer - note.timer);
         //float diff = Vector3.Distance(note.transform.position, transform.position);
 

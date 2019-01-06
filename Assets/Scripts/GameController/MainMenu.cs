@@ -69,6 +69,8 @@ public class MainMenu : MonoBehaviour {
             //loadingScreen.SetActive(true);
             //SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
             isPaused = false;
+            LevelController.isGameOver = false;
+            Time.timeScale = 1.0f;
             StartCoroutine(ChangeScene("MainMenu"));
             SoundController.Play((int)SFX.Load);
         }
@@ -121,15 +123,20 @@ public class MainMenu : MonoBehaviour {
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
+    public void ActivatePause()
+    {
+        isPaused = true;
+    }
+
     public void Pause()
     {
-
         if (pauseMenu != null)
         {
             Time.timeScale = 0.0f;
             pauseMenu.SetActive(true);
         }
     }
+
     public void Restart(string stageName)
     {
         SceneManager.LoadScene(stageName, LoadSceneMode.Single);

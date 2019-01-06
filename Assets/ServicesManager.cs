@@ -14,22 +14,35 @@ public class ServicesManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Awake()
-    {
+    {       
+        /*
         if (instance != null && instance != this)
         {
             Destroy(this.gameObject);
         }
         instance = this;
         DontDestroyOnLoad(gameObject);
+        */
     }
 
     void Start()
     {
-        PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder().Build();
-        PlayGamesPlatform.InitializeInstance(config);
+        // ADD Play Game Services init code here.
+        // Create client configuration
+        PlayGamesClientConfiguration config = new
+            PlayGamesClientConfiguration.Builder()
+            .Build();
+
+        // Enable debugging output (recommended)
         PlayGamesPlatform.DebugLogEnabled = true;
+
+        // Initialize and activate the platform
+        PlayGamesPlatform.InitializeInstance(config);
         PlayGamesPlatform.Activate();
-        
+
+        // Silently sign in
+        PlayGamesPlatform.Instance.Authenticate(SignInCallback, true);
+
     }
 
     public void SignInButton()
@@ -39,6 +52,7 @@ public class ServicesManager : MonoBehaviour
 
     private void SignIn()
     {
+        /*
         if (!PlayGamesPlatform.Instance.localUser.authenticated)
         {
             // Sign in with Play Game Services, showing the consent dialog
@@ -54,16 +68,23 @@ public class ServicesManager : MonoBehaviour
             signInButtonText.text = "Sign In";
             authStatus.text = "";
         }
+        */
 
-        /*
         if (!Social.localUser.authenticated)
         {
             Social.localUser.Authenticate((bool success) => {
-                if (success)
-                    Debug.Log("local user login sucessful");
+                SignInCallback(success);
             });
+        }       
+        else
+        {
+            // Sign out of play games
+            PlayGamesPlatform.Instance.SignOut();
+
+            // Reset UI
+            signInButtonText.text = "Sign In";
+            authStatus.text = "";
         }
-        */
     }
 
     public void SignInCallback(bool success)

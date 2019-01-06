@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System;
+using GooglePlayGames;
 
 public class LevelController : MonoBehaviour {
 
@@ -19,13 +20,21 @@ public class LevelController : MonoBehaviour {
     public Text lifePoint;                                      // Life
     public Text lifePointShadow;
 
+    public float minBlockSpeed = 0.2f;
+    public float blockSpeed = 0.2f;     // 0.2f is just the default start speed
+                                        // This will increase/decrease depending on performance of the player
+    public float maxBlockSpeed = 1.0f;
+
     [Header("Challenge Mode Settings")]
     public float startingTime = 120; // 2mins
     public float deathTimeLost = 30; // Lose 30 seconds per death
     public float comboTimeGain = 15; // Gain 15 seconds per 3 words?
     private static float time;
     private static float highTime;
-    
+
+    [Header("Note and block speed")]
+    public float blockSpeedIncrease = 0.1f;
+    public float blockSpeedDecrease = 0.2f;
 
     private MainMenu mainMenu;
 
@@ -73,7 +82,27 @@ public class LevelController : MonoBehaviour {
 		}
 	}
 	
-	public void Respawn() 
+    public void IncrementBlockSpeed()
+    {
+        blockSpeed += blockSpeedIncrease; 
+        if (blockSpeed > maxBlockSpeed)
+        {
+            blockSpeed = maxBlockSpeed;
+        }
+        
+    }
+
+    public void DecrementBlockSpeed()
+    {
+        blockSpeed -= blockSpeedDecrease;
+        if (blockSpeed < minBlockSpeed)
+        {
+            blockSpeed = minBlockSpeed;
+        }
+        //Mathf.Clamp(blockSpeed -= blockSpeedDecrease, minBlockSpeed, maxBlockSpeed);
+    }
+
+    public void Respawn() 
 	{
 		StartCoroutine("RespawnCo");
 	}
@@ -127,7 +156,26 @@ public class LevelController : MonoBehaviour {
         {
             ScoreController.UpdateHighScore();
         }
-		GameOverPanel.SetActive (true);
+
+        // Update player score to the leaderboards if they are signed in
+        if (PlayGamesPlatform.Instance.localUser.authenticated)
+        {
+            // Note: make sure to add 'using GooglePlayGames'
+            PlayGamesPlatform.Instance.ReportScore(ScoreController.getScore(),
+                GPGSIds.leaderboard_leaderboard,
+                (bool success) =>
+                {
+                    Debug.Log("Leaderboard update success: " + success);
+                });
+        }
+        else
+        {
+            // TODO: Later replace with a popup asking if user wants to submit their score to leaderboard
+            // by signing into their google play account
+            Debug.Log("No google play user signed in. Score not stored in leaderboard.");
+        }
+
+        GameOverPanel.SetActive (true);
         GameOverPanel.transform.SetSiblingIndex(GameOverPanel.transform.parent.childCount-1);
 	}
 		

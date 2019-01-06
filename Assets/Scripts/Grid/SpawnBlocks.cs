@@ -19,16 +19,27 @@ public class SpawnBlocks : MonoBehaviour {
     public static int blocksCount;
     public static int blocksHit;
     public GameObject ball;
-    public float spawnDelay;
+    public float spawnDelay = 15.0f;
     private float timeStamp;
     private float timer;
 
     [Header("Gradient shift of blocks")]
     public float gradientShift;
     private float currSpawnNumber;
-    
+
+    // Handle spawning blocks based on distance instead of just time
+    // This is to account for block speed changes
+    private LevelController levelController;
+    private float distance;
+    private float spawnDistance = 7.5f;
+
     void Start()
     {
+        // Get the point where we need to spawn the blocks
+        levelController = FindObjectOfType<LevelController>();
+        spawnDistance = levelController.blockSpeed * spawnDelay;
+        distance = spawnDistance;
+
         timeStamp = 0.0f;
         currSpawnNumber = 0.57f;
         blocksHit = 0;
@@ -45,6 +56,7 @@ public class SpawnBlocks : MonoBehaviour {
     void Update()
     {
         timer += Time.deltaTime;
+        distance += Time.deltaTime * levelController.blockSpeed;
         /*
         if(blocksCount <= 0)
         {
@@ -54,7 +66,7 @@ public class SpawnBlocks : MonoBehaviour {
         */
 
         // Spawn blocks after certain delay
-        if (timer >= spawnDelay)
+        if (distance >= spawnDistance)
         {
             Spawn();            
             timer = 0;
@@ -64,10 +76,10 @@ public class SpawnBlocks : MonoBehaviour {
     void Spawn()
     {
         //SoundController.Play((int)SFX.ClearBoard); 
-
+        distance = 0;
         blocksCount = 0;
         for (int i = 0; i < rows; i++)
-       {
+        {
             for(int j = 0; j<cols; j++)
             {
                 float blockX = offsetX + i * gapX;
@@ -90,7 +102,7 @@ public class SpawnBlocks : MonoBehaviour {
                 }
                 blocksCount++;               
             }
-       }
+        }
        // Shift the gradient of the blocks
        currSpawnNumber = ((currSpawnNumber + gradientShift) % 1.0f);
     }

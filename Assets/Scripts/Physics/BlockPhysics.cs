@@ -16,9 +16,11 @@ public class BlockPhysics : MonoBehaviour {
     public Sprite metalSprite;
     public float resetIsHit = 0.1f;
     private float timeStamp = 0;
-    
+    private LevelController levelController;
+
     void Start()
     {
+        levelController = FindObjectOfType<LevelController>();
         if (GameModeController.isQuickMode)
             fallSpeed = fallSpeedQuickMode;
         killLayer = GameObject.FindGameObjectWithTag("KillBlockLayer");
@@ -26,7 +28,8 @@ public class BlockPhysics : MonoBehaviour {
     }
 
     private void Update()
-    {        
+    {
+        fallSpeed = levelController.blockSpeed;
         transform.Translate(0f, -fallSpeed * Time.deltaTime, 0f);
         // Kill the block if it falls below the kill layer
         if (transform.position.y < killLayer.transform.position.y)

@@ -42,7 +42,7 @@ public class ScoreController : MonoBehaviour
             highscore = 500;
         }       
         highTime = 10f;
-        LoadFromLeaderBoard();
+        //LoadFromLeaderBoard();
     }
     void Start()
     {
@@ -138,7 +138,7 @@ public class ScoreController : MonoBehaviour
 
     public static void UpdateHighScore()
     {
-        SaveToLeaderBoard(score);
+        //SaveToLeaderBoard(score);
         highscore = score;
         if (newHighScoreT.gameObject != null)
             newHighScoreT.gameObject.SetActive(true);
@@ -163,6 +163,7 @@ public class ScoreController : MonoBehaviour
         saveFile.Close();
     }
 
+    /*
     public static void SaveToLeaderBoard(int highScore)
     {
         //post to leaderboard
@@ -177,6 +178,40 @@ public class ScoreController : MonoBehaviour
             highscore = leaderboardHighScore;
         }
     }
+
+    public void AddScoreToLeaderboard(string leaderboardID, long score)
+    {
+        Social.ReportScore(score, leaderboardID,
+            (bool success) => {
+                if (success)
+                    Debug.Log("post sucessful");
+            }
+       );
+    }
+
+    public int LoadScoreFromLeaderboard()
+    {
+        int score = 0;
+        PlayGamesPlatform.Instance.LoadScores(
+            GPGSIds.leaderboard_leaderboard,
+            LeaderboardStart.PlayerCentered,
+            100,
+            LeaderboardCollection.Public,
+            LeaderboardTimeSpan.AllTime,
+            (LeaderboardScoreData data) =>
+            {
+                if (data.Valid)
+                {
+                    Debug.Log(data.Id);
+                    Debug.Log(data.PlayerScore);
+                    Debug.Log(data.PlayerScore.userID);
+                    Debug.Log(data.PlayerScore.formattedValue);
+                    score = (int)data.PlayerScore.value;
+                }
+            });
+        return score;
+    }
+    */
 
     //load high score from local user's file, not leaderboard
     public static void Load()
